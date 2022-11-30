@@ -63,7 +63,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle="btn-outline0">Log In</Button>}
+          {button && <Button buttonStyle="btn-outline0" >Log In</Button>}
         </div>
       </nav>
     </>
