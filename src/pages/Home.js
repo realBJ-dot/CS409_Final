@@ -1,8 +1,11 @@
 import React from 'react'
 import './css/main.css'
+import FirstSection from "../components/FirstSection/FirstSection"
 const home = () => {
   return (
-    <div>HELLO WORLD</div>
+    <>
+      <FirstSection />
+    </>
   )
 }
 
