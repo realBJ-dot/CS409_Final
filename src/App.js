@@ -4,6 +4,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About"
 import Login from "./pages/Login";
 import Navbar from "./components/navbar/Navbar"
+import Footer from "../src/components/Footer/Footer"
 import { Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/Contact" element={<Contact />}></Route>
       <Route path="/Login" element={<Login />}></Route>
     </Routes>
+    <Footer></Footer>
     </>
   );
 }
