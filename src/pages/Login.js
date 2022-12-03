@@ -70,8 +70,8 @@ const Login = () => {
               </div>
               <div className='panel right-panel'>
                 <div className='content'>
-                    <h3>Member of Brand?</h3>
-                    <p>Nulla elit quis id exercitation ullamco adipisicing ea irure irure deserunt.Proident fugiat dolore mollit laborum quis ad non eiusmod adipisicing et aliqua.</p>
+                    <h3>Don't have an account yet?</h3>
+                    <p>Click sign up below to register a new account</p>
                     <button className='btn1 ' onClick={handleClick}>Sign up</button>
                 </div>
                 <img src="/pics/signup.svg" alt="" className='image'></img>
