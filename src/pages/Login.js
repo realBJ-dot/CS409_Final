@@ -35,13 +35,16 @@ const Login = () => {
             </form>
             <form action="" className='sign-up-form'>
                 <h2 className='title'>Sign up</h2>
+                <div className='flName'>
                 <div className='input-field'>
-                <i class="fas fa-envelope"></i>
+                <i class=""></i>
                   <input type="text" placeholder='First name'></input>
                 </div>
+                <div className='emptybox'></div>
                 <div className='input-field'>
-                <i class="fas fa-envelope"></i>
+                <i class=""></i>
                   <input type="text" placeholder='Last name'></input>
+                </div>
                 </div>
                 <div className='input-field'>
                   <i class="fas fa-envelope"></i>
