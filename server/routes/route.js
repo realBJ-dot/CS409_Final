@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const signUpTemplateCopy = require('../models/signUpTemplate');
+const transactionTemplate = require('../models/transactionTemplate');
 
-//we need a signup route
 router.post('/signup', (req, res) => {
     const user = new signUpTemplateCopy({
         firstName : req.body.firstName,
@@ -17,4 +17,8 @@ router.post('/signup', (req, res) => {
         res.json(err);
     })
 })
+router.get('/signup', (req, res) => {
+    
+})
+
 module.exports = router;
