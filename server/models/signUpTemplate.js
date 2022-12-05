@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { string } = require('prop-types');
 
 const signUpTemplate = new mongoose.Schema({
     firstName : {
@@ -23,4 +22,4 @@ const signUpTemplate = new mongoose.Schema({
         //required : true
     }
 })
-module.exports = mongoose.model('signUpModel', signUpTemplate);
+module.exports = mongoose.model('users', signUpTemplate);
