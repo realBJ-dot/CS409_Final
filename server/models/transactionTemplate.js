@@ -1,25 +1,50 @@
 const mongoose = require('mongoose');
 
+//template for all kinds of transaction
 const transactionTemplate = new mongoose.Schema({
-    firstName : {
+    UserName : {
         type: String,
         //required : true
     },
-    lastName : {
-        type: String,
+    Personal : {
+        type: Number,
         //required : true
     },
-    email : {
-        type: String,
+    BillsUtilities : {
+        type: Number,
         //required : true
     },
-    userName : {
-        type: String,
+    Groceries : {
+        type: Number,
         //required : true
     },
-    password : {
-        type: String,
+    Travel : {
+        type: Number,
         //required : true
-    }
+    },
+    FoodDrink : {
+        type: Number,
+        //required : true
+    },
+    Cashout : {
+        type: Number,
+        //required : true
+    },
+    Entertainment : {
+        type: Number,
+        //required : true
+    },
+    Shopping : {
+        type: Number,
+        //required : true
+    },
+    Gas : {
+        type: Number,
+        //required : true
+    },
+    HealthWellness : {
+        type: Number,
+        //required : true
+    },
 })
 module.exports = mongoose.model('transactions', transactionTemplate);
