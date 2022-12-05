@@ -57,16 +57,16 @@ const Login = () => {
                 <input type="submit" value="Login" className='btn1 btnSolid'></input>
                 <p className='check-account'>Don't have an account? <span onClick = {handleMobileClick} className="reg-account">Register now</span></p>
             </form>
-            <form action="" className='sign-up-form' onChange={handleSignUpSubmit}>
+            <form action="" className='sign-up-form' onSubmit={handleSignUpSubmit}>
                 <h2 className='title'>Sign up</h2>
                 <div className='flName'>
                 <div className='input-field'>
-                <i class=""></i>
+                <i className=""></i>
                   <input type="text" placeholder='First name' onChange={(e) => setSignUpState({...signUpFormState, firstName: e.target.value})}></input>
                 </div>
                 <div className='emptybox'></div>
                 <div className='input-field'>
-                <i class=""></i>
+                <i className=""></i>
                   <input type="text" placeholder='Last name' onChange={(e) => setSignUpState({...signUpFormState, lastName: e.target.value})}></input>
                 </div>
                 </div>
