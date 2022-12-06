@@ -26,11 +26,6 @@ const signUpTemplate = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // list of transaction ids
-    transactions: {
-      type: [String],
-      default: []
-    }
   },
   {
     versionKey: false,

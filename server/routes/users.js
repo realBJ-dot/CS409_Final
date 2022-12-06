@@ -2,25 +2,42 @@ var { User } = require('../models/signUpTemplate')
 const express = require('express');
 const app = express()
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
-router.get("/users", (req, res) => {
-    console.log("User Info");
-    User.find(eval("(" + req.query.where + ")"))
+router.get("/current_user_info", (req, res) => {
+    console.log(req.headers.authorization)
+    if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
+        return res.status(403).send({
+            message: "Authentication failed"
+        });
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    console.log(token)
+    try {
+        jwt.verify(token, process.env.JWTPRIVATEKEY);
+    } catch {
+        console.log("here")
+        return res.status(403).send({
+            message: "Authentication failed"
+        });
+    }
+    const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
+    User.findById(userId)
     .exec()
-        .then(function (data) {
-            if(req.query.count) {
+        .then(user => {
+            if (user) {
                 return res.status(200).send({
                     message: 'Users Retrieved',
-                    data: data.length
+                    data: user
                 });
             } else {
-                return res.status(200).send({
-                    message: 'Users Retrieved',
-                    data: data
+                return res.status(404).send({
+                    message: 'User Not Found',
+                    data: userId
                 });
             }
         })
-        .catch(function (error) {
+        .catch(err => {
             return res.status(500).send({
                 message: 'Server Error',
                 data: []
