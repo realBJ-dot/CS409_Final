@@ -8,11 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const proxy = "http://localhost:3001/api/";
 
-const Login = () => {
+const Signup = () => {
   const [btnState, setBtnState] = useState(false);
   const [btnMobileState, setbtnMobileSate] = useState(false);
-  
-  const [error, setError] = useState("");
+  const [checkSignInUp, setcheckSignInUp] = useState(false);
+  const [error, setError] = useState();
   const navigate = useNavigate();
 
   const handleMobileClick = () => {
@@ -44,8 +44,9 @@ const Login = () => {
       const url = `${proxy}signup`;
       const {data:res} = await axios.post(url, data);
       console.log(res)    
-      navigate("/fetchingData");
+      navigate("/fetchingData"); //redirect to testing page, will change later
     } catch (err) {
+      setError(err.response.data.message)
       //console.log(err.response.data.message)
       if (
         err.response &&
@@ -57,6 +58,39 @@ const Login = () => {
       }
     }
   };
+
+  //Log In
+
+  const [login, setLogin] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const handleLoginChange = ({ currentTarget: input }) => {
+    setLogin({ ...login, [input.name]: input.value });
+  };
+
+  const handleSubmitLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const url = `${proxy}login`;
+      const {data:res} = await axios.post(url, data);
+      localStorage.setItem("token", res.data);
+      window.location= "/fetchingData";
+    } catch (err) {
+      setError(err.response.data.message)
+      console.log(err.response.data.message)
+      if (
+        err.response &&
+        err.response.status >= 400 &&
+        err.response.status <= 500
+      ) {
+        toast.error(error)
+        setError(err.response.data.message);
+      }
+    }
+  };
+
   return (
     <div className="login-container">
       <video src="/videos/background_login.mp4" autoPlay loop muted />
@@ -64,15 +98,15 @@ const Login = () => {
         className={`box-container${ToggleClassCheck}${ToggleMobileClassCheck}`}
       >
         <div className="signin-signup">
-          <form action="" className="sign-in-form">
+          <form action="" className="sign-in-form" onSubmit={handleSubmitLogin}>
             <h2 className="title">Sign in</h2>
             <div className="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username"></input>
+              <input type="text" placeholder="Username" name="userName" onChange={handleLoginChange}></input>
             </div>
             <div className="input-field">
               <i class="fas fa-lock"></i>
-              <input type="Password" placeholder="Password"></input>
+              <input type="Password" placeholder="Password" name="password" onChange={handleLoginChange}></input>
             </div>
             <input
               type="submit"
@@ -178,4 +212,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
