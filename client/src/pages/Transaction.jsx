@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./css/Transaction.css";
 
@@ -8,23 +8,17 @@ const proxy = "http://localhost:3001/api/";
 const authAxios = axios.create({
   baseURL: proxy,
   headers: {
-    Authorization: `Bearer ${accessToken}`
-  }
-})
+    Authorization: `Bearer ${accessToken}`,
+  },
+});
 
 const Transaction = () => {
   const [transactions, setTransactions] = useState([]);
   const [requestError, setrequestError] = useState();
+  const [usersData, setUsersData] = useState([]);
+
   //console.log(accessToken)
-  const fetchDataTransaction = useCallback(async () => {
-    try {
-      const result = await authAxios.get(`/transactions_for_user`);
-      setTransactions(result.data);
-      //console.log(transactions)
-    } catch (err) {
-      setrequestError(err.response);
-    }
-  });
+  
 
   //Log Out
   const handleLogOut = () => {
@@ -32,26 +26,42 @@ const Transaction = () => {
     window.location = "/";
   };
 
+  useEffect(() => {
+    const fetchDataTransaction = async () => {
+      try {
+        const transactions = await authAxios.get(`/transactions_for_user`);
+        const getUsersData = await authAxios.get(`/current_user_info`);
+        setTransactions(transactions.data.data);
+        setUsersData(getUsersData.data.data);
+      } catch (err) {
+        setrequestError(err.response);
+      }
+    };
+    fetchDataTransaction();
+  },[])
   return (
     <div className="Transction-container">
-      <h1>First Name</h1>
-      <h2>Last Name</h2>
-      <h3>Email</h3>
+      {usersData.length < 1 ? (
+        requestError
+      ) : (
+        <>
+          <h1>Fname: {usersData.firstName} - Lname: {usersData.lastName}</h1>
+          <h1>Email: {usersData.email} - Username: {usersData.userName}</h1>
+        </>
+      )}
+      {transactions.map((transaction) => {
+        return (
+          <div className="transaction">
+            <p key={transaction.id}>
+              {transaction.description} - {transaction.category} -{" "}
+              {transaction.amount}
+            </p>
+          </div>
+        );
+      })}
       <button className="button-17" onClick={handleLogOut}>
         Log Out
       </button>
-      <button className="button-17" onClick={() => fetchDataTransaction()}>
-        get transaction
-      </button>
-      {transactions.map((transaction) => {
-        return (
-          <>
-            <p key={transaction.id}>{transaction.description}</p>
-            <p key={transaction.id}>{transaction.category}</p>
-            <p key={transaction.id}>{transaction.amount}</p>
-          </>
-        );
-      })}
     </div>
   );
 };
