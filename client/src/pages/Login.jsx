@@ -42,7 +42,7 @@ const Signup = () => {
     try {
       const url = `${proxy}signup`;
       const {data:res} = await axios.post(url, data);
-      console.log(res)    
+      //console.log(res)    
       navigate("/fetchingData"); //redirect to testing page, will change later
     } catch (err) {
       setError(err.response.data.message)
@@ -73,8 +73,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       const url = `${proxy}login`;
-      const {data:res} = await axios.post(url, login);
-      localStorage.setItem("token", res.data);
+      const res = await axios.post(url, login);
+      localStorage.setItem("token", res.data.token);
       window.location= "/Transaction";
     } catch (err) {
       setError(err.response.data.message)
