@@ -75,8 +75,7 @@ const Signup = () => {
       const url = `${proxy}login`;
       const {data:res} = await axios.post(url, login);
       localStorage.setItem("token", res.data);
-      window.location= "/";
-      console.log("Signed in");
+      window.location= "/Transaction";
     } catch (err) {
       setError(err.response.data.message)
       if (
