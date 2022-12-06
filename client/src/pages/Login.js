@@ -11,7 +11,6 @@ const proxy = "http://localhost:3001/api/";
 const Signup = () => {
   const [btnState, setBtnState] = useState(false);
   const [btnMobileState, setbtnMobileSate] = useState(false);
-  const [checkSignInUp, setcheckSignInUp] = useState(false);
   const [error, setError] = useState();
   const navigate = useNavigate();
 
@@ -74,12 +73,12 @@ const Signup = () => {
     e.preventDefault();
     try {
       const url = `${proxy}login`;
-      const {data:res} = await axios.post(url, data);
+      const {data:res} = await axios.post(url, login);
       localStorage.setItem("token", res.data);
-      window.location= "/fetchingData";
+      window.location= "/";
+      console.log("Signed in");
     } catch (err) {
       setError(err.response.data.message)
-      console.log(err.response.data.message)
       if (
         err.response &&
         err.response.status >= 400 &&
