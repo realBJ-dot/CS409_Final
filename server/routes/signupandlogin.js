@@ -50,6 +50,7 @@ router.post("/login", async (req, res) => {
     const user = await signUpTemplateCopy.User.findOne({
       userName: req.body.userName,
     });
+    console.log(user)
     if (!user)
       return res.status(401).send({
         message: "Invalid Username or Password, please check again",
