@@ -20,5 +20,8 @@ const transactionTemplate = new mongoose.Schema({
         type: Number,
         required: true
     }
+},
+{
+  versionKey: false,
 })
 module.exports = mongoose.model('transactions', transactionTemplate);
