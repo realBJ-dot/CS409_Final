@@ -45,10 +45,10 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { err } = validate(req.body);
-    if (err) return res.status(400).send({ message: error.detail[0].message });
+    if (err) return res.status(400).send({ message: err.detail[0].message });
 
     const user = await signUpTemplateCopy.User.findOne({
-      username: req.body.username,
+      userName: req.body.userName,
     });
     if (!user)
       return res.status(401).send({

@@ -43,10 +43,7 @@ const User = mongoose.model("users", signUpTemplate);
 //Validating data before export to database
 const validate = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string().required().label("First Name"),
-    lastName: Joi.string().required().label("Last Name"),
     userName: Joi.string().required().label("User Name"),
-    email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().require().label("Passowrd"),
   });
   return schema.validate(data);
