@@ -135,7 +135,10 @@ form.sign-up-form {
   transition: .2s ease-in;
 
 }
-
+.displayErr{
+  color: red;
+  font-size: 15px;
+}
 .panels-container {
   position: absolute;
   top: 0;

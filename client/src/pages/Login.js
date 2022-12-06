@@ -1,113 +1,181 @@
-import e from 'cors';
-import React, {useState} from 'react'
-import './css/Login.css'
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./css/Login.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const proxy = "http://localhost:3001/api/";
+
 const Login = () => {
   const [btnState, setBtnState] = useState(false);
   const [btnMobileState, setbtnMobileSate] = useState(false);
-  const [signUpFormState, setSignUpState] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    userName: '',
-    password: ''
-  });
-  const [loginFormState, setLoginState] = useState({
-    userName:"",
-    password:""
-  });
+  
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleMobileClick = () => {
-    setbtnMobileSate(btnMobileState => !btnMobileState)
-  }
+    setbtnMobileSate((btnMobileState) => !btnMobileState);
+  };
   const handleClick = () => {
-    setBtnState(btnState => !btnState);
-  }
+    setBtnState((btnState) => !btnState);
+  };
 
-  const handleLoginSubmit = (e) => {
+  let ToggleClassCheck = btnState ? " sign-up-mode" : "";
+  let ToggleMobileClassCheck = btnMobileState ? " sign-up-mobile-mode" : "";
+
+  //sign up constructor
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const {userName, password} = loginFormState;
-    console.log(userName, password);
-  }
-
-  const handleSignUpSubmit = (e) => {
-    e.preventDefault();
-    const {firstName, lastName, email, userName, password} = signUpFormState;
-    console.log(firstName, lastName, email, userName, password);
-  }
-
-  let ToggleClassCheck = btnState ? ' sign-up-mode': "";
-  let ToggleMobileClassCheck = btnMobileState ? ' sign-up-mobile-mode' : "";
-
+    try {
+      const url = `${proxy}signup`;
+      const {data:res} = await axios.post(url, data);
+      console.log(res)    
+      navigate("/fetchingData");
+    } catch (err) {
+      //console.log(err.response.data.message)
+      if (
+        err.response &&
+        err.response.status >= 400 &&
+        err.response.status <= 500
+      ) {
+        toast.error(error)
+        setError(err.response.data.message);
+      }
+    }
+  };
   return (
-    <div className='login-container'>
-      <video src='/videos/background_login.mp4' autoPlay loop muted />
-      <div className={`box-container${ToggleClassCheck}${ToggleMobileClassCheck}`}>
-      
-        <div className='signin-signup'>
-            <form action="" className='sign-in-form' onSubmit={handleLoginSubmit}>
-                <h2 className='title'>Sign in</h2>
-                <div className='input-field'>
-                  <i class="fas fa-user"></i>
-                  <input type="text" placeholder='Username' onChange={(e) => setLoginState({...loginFormState, userName: e.target.value})}></input>
-                </div>
-                <div className='input-field'>
-                  <i class="fas fa-lock"></i>
-                  <input type="Password" placeholder='Password' onChange={(e) => setLoginState({...loginFormState, password: e.target.value})}></input>
-                </div>
-                <input type="submit" value="Login" className='btn1 btnSolid'></input>
-                <p className='check-account'>Don't have an account? <span onClick = {handleMobileClick} className="reg-account">Register now</span></p>
-            </form>
-            <form action="" className='sign-up-form' onSubmit={handleSignUpSubmit}>
-                <h2 className='title'>Sign up</h2>
-                <div className='flName'>
-                <div className='input-field'>
-                <i className=""></i>
-                  <input type="text" placeholder='First name' onChange={(e) => setSignUpState({...signUpFormState, firstName: e.target.value})}></input>
-                </div>
-                <div className='emptybox'></div>
-                <div className='input-field'>
-                <i className=""></i>
-                  <input type="text" placeholder='Last name' onChange={(e) => setSignUpState({...signUpFormState, lastName: e.target.value})}></input>
-                </div>
-                </div>
-                <div className='input-field'>
-                  <i class="fas fa-envelope"></i>
-                  <input type="text" placeholder='Email' onChange={(e) => setSignUpState({...signUpFormState, email: e.target.value})}></input>
-                </div>
-                <div className='input-field'>
-                  <i class="fas fa-user"></i>
-                  <input type="text" placeholder='Username' onChange={(e) => setSignUpState({...signUpFormState, userName: e.target.value})}></input>
-                </div>
-                <div className='input-field'>
-                  <i class="fas fa-lock"></i>
-                  <input type="Password" placeholder="Password" onChange={(e) => setSignUpState({...signUpFormState, password: e.target.value})}></input>
-                </div>
-                <input type="submit" value="Sign up" className='btn1 btnSolid'></input>
-                <p className='check-account'>Already have an account? <span onClick = {handleMobileClick} className="reg-account">Sign in now</span></p>
-            </form>
+    <div className="login-container">
+      <video src="/videos/background_login.mp4" autoPlay loop muted />
+      <div
+        className={`box-container${ToggleClassCheck}${ToggleMobileClassCheck}`}
+      >
+        <div className="signin-signup">
+          <form action="" className="sign-in-form">
+            <h2 className="title">Sign in</h2>
+            <div className="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Username"></input>
+            </div>
+            <div className="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="Password" placeholder="Password"></input>
+            </div>
+            <input
+              type="submit"
+              value="Login"
+              className="btn1 btnSolid"
+            ></input>
+            <p className="check-account">
+              Don't have an account?{" "}
+              <span onClick={handleMobileClick} className="reg-account">
+                Register now
+              </span>
+            </p>
+          </form>
+          <form action="" className="sign-up-form" onSubmit={handleSubmit}>
+          
+            <h2 className="title">Sign up</h2>
+            <div className="flName">
+              <div className="input-field">
+                <i class=""></i>
+                <input
+                  type="text"
+                  placeholder="First name"
+                  name="firstName"
+                  onChange={handleChange}
+                ></input>
+              </div>
+              <div className="input-field">
+                <i class=""></i>
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  name="lastName"
+                  onChange={handleChange}
+                ></input>
+              </div>
+            </div>
+            <div className="input-field">
+              <i class="fas fa-envelope"></i>
+              <input
+                type="text"
+                placeholder="Email"
+                name="email"
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="input-field">
+              <i class="fas fa-user"></i>
+              <input
+                type="text"
+                placeholder="Username"
+                name="userName"
+                onChange={handleChange}
+              ></input>
+            </div>
+
+            <div className="input-field">
+              <i class="fas fa-lock"></i>
+              <input
+                type="Password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+              ></input>
+            </div>
+            <input
+              type="submit"
+              value="Sign up"
+              className="btn1 btnSolid"
+            ></input>
+            <p className="check-account">
+              Already have an account?{" "}
+              <span onClick={handleMobileClick} className="reg-account">
+                Sign in now
+              </span>
+            </p>
+          </form>
         </div>
-        <div className='panels-container'>
-              <div className='panel left-panel'>
-                <div className='content'>
-                    <h3>Already have account?</h3>
-                    <p>Click Sign In now to explore the feature</p>
-                    <button className='btn1' onClick={handleClick}>Sign in</button>
-                </div>
-                <img src="/pics/signin.svg" alt="" className='image'></img>
-              </div>
-              <div className='panel right-panel'>
-                <div className='content'>
-                    <h3>Don't have an account yet?</h3>
-                    <p>Click sign up below to register a new account</p>
-                    <button className='btn1 ' onClick={handleClick}>Sign up</button>
-                </div>
-                <img src="/pics/signup.svg" alt="" className='image'></img>
-              </div>
+        <div className="panels-container">
+          <div className="panel left-panel">
+            <div className="content">
+              <h3>Already have account?</h3>
+              <p>Click Sign In now to explore the feature</p>
+              <button className="btn1" onClick={handleClick}>
+                Sign in
+              </button>
+            </div>
+            <img src="/pics/signin.svg" alt="" className="image"></img>
+          </div>
+          <div className="panel right-panel">
+            <div className="content">
+              <h3>Don't have an account yet?</h3>
+              <p>Click sign up below to register a new account</p>
+              <button className="btn1 " onClick={handleClick}>
+                Sign up
+              </button>
+            </div>
+            <img src="/pics/signup.svg" alt="" className="image"></img>
+          </div>
         </div>
       </div>
-      
+      {error && <ToastContainer />}
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
