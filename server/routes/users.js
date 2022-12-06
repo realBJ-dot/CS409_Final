@@ -3,6 +3,8 @@ const express = require('express');
 const app = express()
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const Transaction = require("../models/transactionTemplate");
+const Joi = require("joi");
 
 router.get("/current_user_info", (req, res) => {
     //console.log(req.headers.authorization)
@@ -88,5 +90,16 @@ router.get("/current_user_info", (req, res) => {
         });
     }
 });  
+
+const validate = (data) => {
+    const schema = Joi.object({
+      description: Joi.string().label("Description"),
+      category: Joi.string().required().label("Category"),
+      dateCreated: Joi.date().label("Date"),
+      amount: Joi.number().label("Amount")
+    });
+    return schema.validate(data);
+};
+
 
 module.exports = router;
