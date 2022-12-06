@@ -21,6 +21,7 @@ h3{
     font-size: 2rem;
 }
 .button-17 {
+  margin: 10px;
   width: 200px;
   height: 100px;
   align-items: center;
@@ -94,4 +95,12 @@ h3{
 .button-17:disabled {
   box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
     rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+.transaction{
+}
+.transaction p{
+  color: aqua;
+  font-size: 30px;
+  margin: 3rem;
 }
