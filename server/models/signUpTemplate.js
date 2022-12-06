@@ -26,12 +26,18 @@ const signUpTemplate = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // list of transaction ids
+    transactions: {
+      type: [String],
+      default: []
+    }
   },
   {
     versionKey: false,
   }
 );
-//generate Token for account
+
+// generate Token for account
 signUpTemplate.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
     expiresIn: "10d",
@@ -40,7 +46,7 @@ signUpTemplate.methods.generateAuthToken = function () {
 };
 
 const User = mongoose.model("users", signUpTemplate);
-//Validating data before export to database
+// Validating data before export to database
 const validate = (data) => {
   const schema = Joi.object({
     userName: Joi.string().required().label("User Name"),

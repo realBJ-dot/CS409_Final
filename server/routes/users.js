@@ -1,4 +1,4 @@
-var {User} = require('../models/signUpTemplate')
+var { User } = require('../models/signUpTemplate')
 const express = require('express');
 const app = express()
 const router = express.Router();
