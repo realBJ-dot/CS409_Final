@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 router.get("/transactions_for_user", async (req, res) => {
     if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
     const token = req.headers.authorization.split(' ')[1];
@@ -15,18 +16,50 @@ router.get("/transactions_for_user", async (req, res) => {
         jwt.verify(token, process.env.JWTPRIVATEKEY);
     } catch {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
+
     const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
-    Transaction.find({assignedUser: userId}).then(result => {
+    let query = null;
+    try {
+        const filter = { assignedUser: userId };
+        if (req.query.startDate && req.query.endDate) {
+            // convert date to iso format
+            const startISO = new Date(req.query.startDate).toISOString();
+            const endISO = new Date(req.query.endDate).toISOString()
+            filter.dateCreated = {"$gte": startISO, "$lt": endISO}
+        }
+        const sortQuery = req.query.sort ? JSON.parse(req.query.sort) : {}
+        query = Transaction.find(filter).sort(sortQuery)
+        if (req.query.limit) {
+            const limitQuery = parseInt(req.query.limit)
+            // throw error if parseInt fail
+            if (isNaN(limitQuery)) {
+                return res.status(400).send({
+                    message: "Limit should be a number",
+                    data: req.query.limit
+                });
+            }
+            query = query.limit(limitQuery)
+        }
+    } catch {
+        return res.status(400).send({
+            message: "Error while parsing params",
+            data: req.query
+        });
+    }
+    
+    query.exec().then(result => {
         res.status(200).send({
             message: "Transaction retrieved successfully",
             data: result
         })
     }).catch(err => {
-        res.status(200).send({
-            message: "Internal server error. Unable to retrieve transaction"
+        res.status(500).send({
+            message: "Internal server error. Unable to retrieve transaction",
+            data: []
         })
     })
 });
@@ -38,6 +71,7 @@ router.post("/transactions_for_user", async (req, res) => {
         });
     }
     const token = req.headers.authorization.split(' ')[1];
+
     const { schemaValidationError } = validate(req.body);
     if (schemaValidationError) {
         return res.status(400).send({

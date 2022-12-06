@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./css/Login.css";
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,7 +11,6 @@ const Signup = () => {
   const [btnState, setBtnState] = useState(false);
   const [btnMobileState, setbtnMobileSate] = useState(false);
   const [error, setError] = useState();
-  const navigate = useNavigate();
 
   const handleMobileClick = () => {
     setbtnMobileSate((btnMobileState) => !btnMobileState);
@@ -41,9 +39,10 @@ const Signup = () => {
     e.preventDefault();
     try {
       const url = `${proxy}signup`;
-      const {data:res} = await axios.post(url, data);
-      console.log(res)    
-      navigate("/fetchingData"); //redirect to testing page, will change later
+      const res = await axios.post(url, data);
+      console.log(res.message)
+      window.location= "/Login";
+      toast.success("YAYY, successfully sign up");
     } catch (err) {
       setError(err.response.data.message)
       //console.log(err.response.data.message)
@@ -73,8 +72,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       const url = `${proxy}login`;
-      const {data:res} = await axios.post(url, login);
-      localStorage.setItem("token", res.data);
+      const res = await axios.post(url, login);
+      localStorage.setItem("token", res.data.token);
       window.location= "/Transaction";
     } catch (err) {
       setError(err.response.data.message)
@@ -205,7 +204,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      {error && <ToastContainer />}
+      <ToastContainer />
     </div>
   );
 };
