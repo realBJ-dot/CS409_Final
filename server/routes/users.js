@@ -3,6 +3,8 @@ const express = require('express');
 const app = express()
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const Transaction = require("../models/transactionTemplate");
+const Joi = require("joi");
 
 router.get("/current_user_info", (req, res) => {
     //console.log(req.headers.authorization)
@@ -44,6 +46,60 @@ router.get("/current_user_info", (req, res) => {
             });
         });
   });
+
+
+  router.delete("/users/:id", async (req, res) => {
+    if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
+        return res.status(403).send({
+            message: "Authentication failed"
+        });
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    const { schemaValidationError } = validate(req.body);
+    if (schemaValidationError) {
+        return res.status(400).send({
+            message: error.details[0].message
+        });
+    }
+    try {
+        jwt.verify(token, process.env.JWTPRIVATEKEY);
+    } catch {
+        return res.status(403).send({
+            message: "Authentication failed"
+        });
+    }
+    const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
+    try {
+        User.findByIdAndDelete(req.params._id, function(err, deletedUser) {
+            if (err) {
+                res.status(404).send({
+                    message: "cannot user task to delete",
+                    data: {}
+                });
+            }
+            else {
+                res.status(200).send({
+                    message: "User deleted",
+                    data: deletedUser
+                });
+            }
+        });
+    } catch {
+        return res.status(500).send({ 
+            message: "Internal server error. Failed to create transaction"
+        });
+    }
+});  
+
+const validate = (data) => {
+    const schema = Joi.object({
+      description: Joi.string().label("Description"),
+      category: Joi.string().required().label("Category"),
+      dateCreated: Joi.date().label("Date"),
+      amount: Joi.number().label("Amount")
+    });
+    return schema.validate(data);
+};
 
 
 module.exports = router;

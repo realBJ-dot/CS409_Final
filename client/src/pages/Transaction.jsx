@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./css/Transaction.css";
+import DoughnutChart from "../components/chart/DoughnutChart";
 
 const accessToken = localStorage.getItem("token");
 const proxy = "http://localhost:3001/api/";
@@ -39,6 +40,10 @@ const Transaction = () => {
     };
     fetchDataTransaction();
   },[])
+
+
+  
+
   return (
     <div className="Transction-container">
       {usersData.length < 1 ? (
@@ -49,16 +54,8 @@ const Transaction = () => {
           <h1>Email: {usersData.email} - Username: {usersData.userName}</h1>
         </>
       )}
-      {transactions.map((transaction) => {
-        return (
-          <div className="transaction">
-            <p key={transaction.id}>
-              {transaction.description} - {transaction.category} -{" "}
-              {transaction.amount}
-            </p>
-          </div>
-        );
-      })}
+      <DoughnutChart transactions={transactions}/>
+
       <button className="button-17" onClick={handleLogOut}>
         Log Out
       </button>
