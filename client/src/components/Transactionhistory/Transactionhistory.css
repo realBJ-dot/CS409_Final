@@ -1,0 +1,53 @@
+.transContainer{
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.transContainer h1{
+    color: #0c326f;
+    font-size: 2rem;
+}
+
+.itemList{
+    width: 100%;
+    height: 3rem;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    position: relative;
+}
+
+.item1{
+    text-transform: uppercase;
+    color:rgb(255, 174, 0);
+    margin-left: 30px;
+}
+
+.itemBox{
+    width: 8px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+}
+.trashIcon{
+    margin-right: 1rem;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+.itemList i{
+    font-size: 20px;
+    color: rgb(113, 113, 113);
+    transition: 0.1s ease-in;
+}
+
+.itemList i:hover{
+    color: rgb(253, 13, 13);
+}

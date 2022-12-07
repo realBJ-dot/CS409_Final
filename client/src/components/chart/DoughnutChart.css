@@ -1,0 +1,61 @@
+.chartContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartContainer h1{
+  color: #0c326f;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.chartContainer h3{
+  margin: 20px;
+  font-size: 2rem;
+}
+
+.chartContainer h3 .amount{
+  color: rgb(72, 251, 2);
+}
+
+.chart{
+  position: relative;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.total{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.labels{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  height: 30px;
+  align-items: center;
+}
+.labelTitles{
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.labels h3{
+  font-size: 20px;
+}
+.colorItems{
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+}

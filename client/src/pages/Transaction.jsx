@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./css/Transaction.css";
 import DoughnutChart from "../components/chart/DoughnutChart";
-
+import Form from "../components/Form/Form"
+import Transactionhistory from "../components/Transactionhistory/Transactionhistory"
 const accessToken = localStorage.getItem("token");
 const proxy = "http://localhost:3001/api/";
 
@@ -19,7 +20,6 @@ const Transaction = () => {
   const [usersData, setUsersData] = useState([]);
 
   //console.log(accessToken)
-  
 
   //Log Out
   const handleLogOut = () => {
@@ -39,26 +39,34 @@ const Transaction = () => {
       }
     };
     fetchDataTransaction();
-  },[])
-
-
-  
+  }, []);
 
   return (
     <div className="Transction-container">
-      {usersData.length < 1 ? (
-        requestError
-      ) : (
-        <>
-          <h1>Fname: {usersData.firstName} - Lname: {usersData.lastName}</h1>
-          <h1>Email: {usersData.email} - Username: {usersData.userName}</h1>
-        </>
-      )}
-      <DoughnutChart transactions={transactions}/>
-
-      <button className="button-17" onClick={handleLogOut}>
-        Log Out
-      </button>
+      <div className="Topbox">
+        {usersData.length < 1 ? (
+          requestError
+        ) : (
+          <>
+            <h2>
+              <span className="userName">Hi! {usersData.userName},</span> your
+              monthly spending are as follow:
+            </h2>
+            {/* <button className="button-17" onClick={handleLogOut}>
+              Log Out
+            </button> */}
+          </>
+        )}
+      </div>
+      <div className="Bottombox">
+        <div className="leftPanelBox">
+          <DoughnutChart transactions={transactions} />
+        </div>
+        <div className="rightPanelBox">
+          <Form />
+          <Transactionhistory />
+        </div>
+      </div>
     </div>
   );
 };
