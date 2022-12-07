@@ -103,6 +103,71 @@ router.post("/transactions_for_user", async (req, res) => {
     }
 });
 
+router.get("/transaction_stats_for_user", async (req, res) => {
+    if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
+        return res.status(403).send({
+            message: "Authentication failed",
+            data: []
+        });
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+        jwt.verify(token, process.env.JWTPRIVATEKEY);
+    } catch {
+        return res.status(403).send({
+            message: "Authentication failed",
+            data: []
+        });
+    }
+
+    const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
+    let filter = { assignedUser: userId };
+    try {
+        if (req.query.startDate && req.query.endDate) {
+            // convert date to iso format
+            const startISO = new Date(req.query.startDate).toISOString();
+            const endISO = new Date(req.query.endDate).toISOString()
+            filter.dateCreated = {"$gte": startISO, "$lt": endISO}
+        }
+    } catch {
+        return res.status(400).send({
+            message: "Error while parsing params",
+            data: req.query
+        });
+    }
+    
+    // Transaction.find(filter).exec().then(result => {
+    //     res.status(200).send({
+    //         message: "Transaction retrieved successfully",
+    //         data: result
+    //     })
+    // }).catch(err => {
+    //     res.status(500).send({
+    //         message: "Internal server error. Unable to retrieve transaction",
+    //         data: []
+    //     })
+    // })
+    Transaction.aggregate([
+        {"$match": filter},
+        {"$group": {
+            "_id": "$category",
+            "sum": {"$sum": "$amount"}
+        }},
+    ], (err, stats) => {
+        if (err) {
+            res.status(500).send({
+                message: "Internal server error. Unable to retrieve transaction stats",
+                data: []
+            })
+        } else {
+            res.status(200).send({
+                message: "Transaction stats retrieved successfully",
+                data: stats
+            })
+        }
+    })
+});
+
 router.delete("/transactions_for_user/:id", async (req, res) => {
     if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
         return res.status(403).send({
