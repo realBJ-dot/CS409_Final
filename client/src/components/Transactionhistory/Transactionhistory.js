@@ -22,7 +22,6 @@ const Transactionhistory = ({transactions}) => {
       name: last4Elems[3]['description'].concat(" $".concat(last4Elems[3]['amount'])),
       color: "#7f0000",
     },
-
   ];
   return (
     <div className="transContainer">
