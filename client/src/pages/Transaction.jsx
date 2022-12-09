@@ -64,7 +64,7 @@ const Transaction = () => {
         </div>
         <div className="rightPanelBox">
           <Form />
-          <Transactionhistory />
+          <Transactionhistory transactions={transactions}/>
         </div>
       </div>
     </div>

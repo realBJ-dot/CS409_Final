@@ -15,9 +15,9 @@ const DoughnutChart = ({ transactions }) => {
     .map((item) => item["amount"])[0];
 
   const grocery = transactions
-    .filter((item) => item["category"] === "groceries")
+    .filter((item) => item["category"] === "grocery")
     .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "groceries")
+    .filter((item) => item["category"] === "grocery")
     .map((item) => item["amount"])[0];
 
   const saving = transactions
@@ -92,14 +92,15 @@ const DoughnutChart = ({ transactions }) => {
     .filter((item) => item["category"] === "professionalService")
     .map((item) => item["amount"])[0];
   
-  const data = [rent, grocery, saving, utility, grocery, investment, shopping, gas,
-    health, professionalService, cashOut, travel, food, personal, entertainment]
+  const data = [rent, grocery, saving, utility, investment, shopping, gas,
+    health, professionalService, cashOut, travel, food, personal, entertainment];
   const config = {
     data: {
       datasets: [
         {
           data: data,
-          backgroundColor: ["#B0C24D", "#244D70", "#FFDE59", "#F7E018"],
+          backgroundColor: ["#2f4f4f", "#7f0000", "#008000", "#4b0082", "#d2b48c", "#ff8c00"
+          , "#ffff00", "#00ff00", "#00bfff", "#0000ff", "#ff00ff", "#dda0dd", "#ff1493", "#7fffd4"],
           hoverOffser: 5,
           borderRadius: 10,
           spacing: 5,
@@ -118,11 +119,10 @@ const DoughnutChart = ({ transactions }) => {
         <div className="chart">
           <Doughnut {...config} />
           <h3 className="total">
-            Total:
             <span className="amount"> ${data.reduce((partialSum, a) => partialSum + a, 0)}</span>
           </h3>
         </div>
-        <Labels/>
+        <Labels data={data}/>
       </div>
     </div>
   );
