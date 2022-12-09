@@ -61,7 +61,6 @@ router.post("/login", async (req, res) => {
         });
     }
       
-
     const validPassword = await bcrypt.compare(
         req.body.password,
         user.password

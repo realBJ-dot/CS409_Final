@@ -3,8 +3,9 @@ const app = express();
 const router = express.Router();
 const createAccount = require('./routes/authentication')
 const loadUser = require('./routes/users')
-const transaction = require('./routes/transactions')
+const userTransactions = require('./routes/userTransactions')
+const singleTransaction = require('./routes/singleTransaction')
 
-router.use("/api", createAccount, loadUser, transaction);
+router.use("/api", createAccount, loadUser, userTransactions, singleTransaction);
 
 module.exports = router;
