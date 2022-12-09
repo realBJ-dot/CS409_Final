@@ -67,7 +67,8 @@ router.get("/transactions_for_user", async (req, res) => {
 router.post("/transactions_for_user", async (req, res) => {
     if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
     const token = req.headers.authorization.split(' ')[1];
@@ -75,14 +76,16 @@ router.post("/transactions_for_user", async (req, res) => {
     const { schemaValidationError } = validate(req.body);
     if (schemaValidationError) {
         return res.status(400).send({
-            message: error.details[0].message
+            message: error.details[0].message,
+            data: req.body
         });
     }
     try {
         jwt.verify(token, process.env.JWTPRIVATEKEY);
     } catch {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
     const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
@@ -136,17 +139,7 @@ router.get("/transaction_stats_for_user", async (req, res) => {
         });
     }
     
-    // Transaction.find(filter).exec().then(result => {
-    //     res.status(200).send({
-    //         message: "Transaction retrieved successfully",
-    //         data: result
-    //     })
-    // }).catch(err => {
-    //     res.status(500).send({
-    //         message: "Internal server error. Unable to retrieve transaction",
-    //         data: []
-    //     })
-    // })
+    // group by category and then calculate the sum
     Transaction.aggregate([
         {"$match": filter},
         {"$group": {
@@ -166,49 +159,6 @@ router.get("/transaction_stats_for_user", async (req, res) => {
             })
         }
     })
-});
-
-router.delete("/transactions_for_user/:id", async (req, res) => {
-    if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
-        return res.status(403).send({
-            message: "Authentication failed"
-        });
-    }
-    const token = req.headers.authorization.split(' ')[1];
-    const { schemaValidationError } = validate(req.body);
-    if (schemaValidationError) {
-        return res.status(400).send({
-            message: error.details[0].message
-        });
-    }
-    try {
-        jwt.verify(token, process.env.JWTPRIVATEKEY);
-    } catch {
-        return res.status(403).send({
-            message: "Authentication failed"
-        });
-    }
-    const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
-    try {
-        Transaction.findByIdAndDelete(req.params._id, function(err, deletedTransaction) {
-            if (err) {
-                res.status(404).send({
-                    message: "cannot find task to delete",
-                    data: {}
-                });
-            }
-            else {
-                res.status(200).send({
-                    message: "Transaction deleted",
-                    data: deletedTransaction
-                });
-            }
-        });
-    } catch {
-        return res.status(500).send({ 
-            message: "Internal server error. Failed to create transaction"
-        });
-    }
 });
 
 const validate = (data) => {
