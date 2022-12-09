@@ -8,100 +8,60 @@ Chart.register(ArcElement);
 
 const DoughnutChart = ({ transactions }) => {
   //const categories = transactions.map((item) => item["category"]);
-  const processedData = {};
-  if (transactions) {
+  //[rent, grocery, saving, utility, investment, shopping, gas,
+   // health, professionalService, cashOut, travel, food, personal, entertainment];
+  const processedData = {'rent': 0,  'grocery': 0, 'saving': 0, 'utility': 0, 'investment':0, 'shopping':0, 'gas':0,
+   'health':0, 'professionalService':0, 'cashOut':0, 'travel': 0, 'food': 0, 'personal':0, 'entertainment': 0
+      };
+  
     for (var i = 0; i < transactions.length; i++) {
-      processedData['cate'] = transactions[i]['category'];
+      processedData[transactions[i]['category']] += transactions[i]['amount'];
     }
     console.log(processedData);
-  }
+  
 
 
 
 
-  const rent = transactions
-    .filter((item) => item["category"] === "rent")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "rent")
-    .map((item) => item["amount"])[0];
+  const rent = processedData['rent'];
 
-  const grocery = transactions
-    .filter((item) => item["category"] === "grocery")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "grocery")
-    .map((item) => item["amount"])[0];
+  const grocery = processedData['grocery'];
+    
 
-  const saving = transactions
-    .filter((item) => item["category"] === "saving")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "saving")
-    .map((item) => item["amount"])[0];
+  const saving = processedData['saving'];
+   
+  const utility = processedData['utility']
+    
 
-  const utility = transactions
-    .filter((item) => item["category"] === "utility")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "utility")
-    .map((item) => item["amount"])[0];
+  const investment = processedData['investment']
+    
 
-  const personal = transactions
-    .filter((item) => item["category"] === "personal")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "personal")
-    .map((item) => item["amount"])[0];
+  const shopping = processedData['shopping']
+    
 
-  const travel = transactions
-    .filter((item) => item["category"] === "travel")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "travel")
-    .map((item) => item["amount"])[0];
+    const gas = processedData['gas']
+   
 
-    const investment = transactions
-    .filter((item) => item["category"] === "investment")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "investment")
-    .map((item) => item["amount"])[0];
+    const health = processedData['health']
+    
 
-    const food = transactions
-    .filter((item) => item["category"] === "food")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "food")
-    .map((item) => item["amount"])[0];
+    const professionalService = processedData['professionalService']
+    
 
-    const cashOut = transactions
-    .filter((item) => item["category"] === "cashOut")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "cashOut")
-    .map((item) => item["amount"])[0];
+    const cashOut = processedData['cashOut']
+    
 
-    const entertainment = transactions
-    .filter((item) => item["category"] === "entertainment")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "entertainment")
-    .map((item) => item["amount"])[0];
+    const travel = processedData['travel']
+    
 
-    const gas = transactions
-    .filter((item) => item["category"] === "gas")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "gas")
-    .map((item) => item["amount"])[0];
+    const food = processedData['food']
+   
 
-    const shopping = transactions
-    .filter((item) => item["category"] === "shopping")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "shopping")
-    .map((item) => item["amount"])[0];
+    const personal = processedData['personal']
+    
 
-    const health = transactions
-    .filter((item) => item["category"] === "health")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "health")
-    .map((item) => item["amount"])[0];
-
-    const professionalService = transactions
-    .filter((item) => item["category"] === "professionalService")
-    .map((item) => item["amount"])[0] === undefined ? 0 : transactions
-    .filter((item) => item["category"] === "professionalService")
-    .map((item) => item["amount"])[0];
+    const entertainment = processedData['entertainment']
+    
   
   const data = [rent, grocery, saving, utility, investment, shopping, gas,
     health, professionalService, cashOut, travel, food, personal, entertainment];

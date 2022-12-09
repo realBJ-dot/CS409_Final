@@ -4,7 +4,6 @@ import "./Transactionhistory.css";
 
 const Transactionhistory = ({transactions}) => {
   const last4Elems = transactions && transactions.length > 4 ? transactions.slice(Math.max(transactions.length - 4, 0)) : transactions;
-  console.log(transactions);
   const items = [
     {
       name: last4Elems[0]['description'].concat(" $".concat(last4Elems[0]['amount'])),

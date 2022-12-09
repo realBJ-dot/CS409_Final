@@ -19,7 +19,6 @@ const Transaction = () => {
   const [requestError, setrequestError] = useState();
   const [usersData, setUsersData] = useState([]);
 
-  //console.log(accessToken)
 
   //Log Out
   const handleLogOut = () => {
@@ -32,15 +31,15 @@ const Transaction = () => {
       try {
         const transactions = await authAxios.get(`/transactions_for_user`);
         const getUsersData = await authAxios.get(`/current_user_info`);
-        console.log(getUsersData);
+       
         setTransactions(transactions.data.data);
         setUsersData(getUsersData.data.data);
       } catch (err) {
-        console.log(err);
+        
         setrequestError(err.response);
       }
     };
-    //console.log(transactions);
+    
     fetchDataTransaction();
   }, []);
 
