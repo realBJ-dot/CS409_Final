@@ -8,6 +8,17 @@ Chart.register(ArcElement);
 
 const DoughnutChart = ({ transactions }) => {
   //const categories = transactions.map((item) => item["category"]);
+  const processedData = {};
+  if (transactions) {
+    for (var i = 0; i < transactions.length; i++) {
+      processedData['cate'] = transactions[i]['category'];
+    }
+    console.log(processedData);
+  }
+
+
+
+
   const rent = transactions
     .filter((item) => item["category"] === "rent")
     .map((item) => item["amount"])[0] === undefined ? 0 : transactions

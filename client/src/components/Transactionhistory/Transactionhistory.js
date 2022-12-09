@@ -3,8 +3,8 @@ import "./Transactionhistory.css";
 
 
 const Transactionhistory = ({transactions}) => {
-  const last4Elems = transactions.slice(Math.max(transactions.length - 4, 0));
-  console.log(last4Elems);
+  const last4Elems = transactions && transactions.length > 4 ? transactions.slice(Math.max(transactions.length - 4, 0)) : transactions;
+  console.log(transactions);
   const items = [
     {
       name: last4Elems[0]['description'].concat(" $".concat(last4Elems[0]['amount'])),
@@ -20,7 +20,7 @@ const Transactionhistory = ({transactions}) => {
     },
     {
       name: last4Elems[3]['description'].concat(" $".concat(last4Elems[3]['amount'])),
-      color: "#7f0000",
+      color: "#0000ff",
     },
   ];
   return (
