@@ -15,7 +15,7 @@ const items= [
         percent: 35
     },
     {
-        type: "Expense",
+        type: "Rent",
         color: "#FFDE59",
         percent: 75
     }
