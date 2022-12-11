@@ -17,7 +17,7 @@ const authAxios = axios.create({
 const Form = () => {
   const [transactionState, setTransactionState] = useState({
     transactionDesc: "",
-    dropDown: "Investment",
+    dropDown: "investment",
     amount: 0
   });
   const [usersData, setUsersData] = useState([]);
@@ -88,20 +88,20 @@ const Form = () => {
         ></input>
         <h3>Type: </h3>
         <select className="dropdown-input" onChange={(e) => setTransactionState({...transactionState, dropDown: e.target.value})}>
-          <option value="Investment" defaultValue>Investment</option>
-          <option value="Saving">Saving</option>
-          <option value="Personal">Personal</option>
-          <option value="Utility">Utility</option>
-          <option value="Grocery">Grocery</option>
-          <option value="Travel">Travel</option>
-          <option value="Food">Food</option>
-          <option value="CashOut">Cash Out</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Shopping">Shopping</option>
-          <option value="Gas">Gas</option>
-          <option value="Health">Health</option>
-          <option value="ProfessionalService">Professional Service</option>
-          <option value="Rent">Health</option>
+          <option value="investment" defaultValue>Investment</option>
+          <option value="saving">Saving</option>
+          <option value="personal">Personal</option>
+          <option value="utility">Utility</option>
+          <option value="grocery">Grocery</option>
+          <option value="travel">Travel</option>
+          <option value="food">Food</option>
+          <option value="cashOut">Cash Out</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="shopping">Shopping</option>
+          <option value="gas">Gas</option>
+          <option value="health">Health</option>
+          <option value="professionalService">Professional Service</option>
+          <option value="rent">Rent</option>
           
         </select>
         <h3>Amount: </h3>

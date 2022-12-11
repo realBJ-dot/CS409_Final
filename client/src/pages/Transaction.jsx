@@ -62,9 +62,9 @@ const Transaction = () => {
       </div>
       <div className="Bottombox">
         <div className="leftPanelBox">
-        {transactions ? 
+        {/*transactions ? 
           <DoughnutChart transactions={transactions} /> : <></>
-        }
+          */}
         </div>
         <div className="rightPanelBox">
           <Form />
