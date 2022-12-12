@@ -17,7 +17,7 @@ const DoughnutChart = ({ transactions }) => {
     for (var i = 0; i < transactions.length; i++) {
       processedData[transactions[i]['category']] += transactions[i]['amount'];
     }
-    console.log(processedData);
+    //console.log(processedData);
   
 
 

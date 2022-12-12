@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-video {
+.loginVideo {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -270,7 +270,7 @@ form.sign-up-form {
   .login-container{
     min-width: 100vw;
   }
-  video {
+  .loginVideo {
     object-fit: none;
     width: 90vw;
   }

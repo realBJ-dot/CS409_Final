@@ -54,9 +54,9 @@ const Transaction = () => {
               <span className="userName">Hi! {usersData.userName},</span> your
               monthly spending are as follow:
             </h2>
-            {/* <button className="button-17" onClick={handleLogOut}>
+            <button className="button-17" onClick={handleLogOut}>
               Log Out
-            </button> */}
+            </button>
           </>
         )}
       </div>

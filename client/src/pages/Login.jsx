@@ -90,7 +90,7 @@ const Signup = () => {
 
   return (
     <div className="login-container">
-      <video src="/videos/background_login.mp4" autoPlay loop muted />
+      <video className="loginVideo" src="/videos/background_login.mp4" autoPlay loop muted />
       <div
         className={`box-container${ToggleClassCheck}${ToggleMobileClassCheck}`}
       >
