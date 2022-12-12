@@ -189,8 +189,9 @@ const Signup = () => {
               <button className="btn1" onClick={handleClick}>
                 Sign in
               </button>
+              <img src="/pics/signin.svg" alt="" className="image"></img>
             </div>
-            <img src="/pics/signin.svg" alt="" className="image"></img>
+           
           </div>
           <div className="panel right-panel">
             <div className="content">
@@ -199,8 +200,9 @@ const Signup = () => {
               <button className="btn1 " onClick={handleClick}>
                 Sign up
               </button>
+              <img src="/pics/signup.svg" alt="" className="image"></img>
             </div>
-            <img src="/pics/signup.svg" alt="" className="image"></img>
+           
           </div>
         </div>
       </div>

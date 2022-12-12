@@ -119,3 +119,9 @@
     grid-template-areas: "leftPanelBox" "rightPanelBox";
   }
 }
+
+@media screen and (max-width: 820px) {
+  .Topbox{
+    height: 30vh;
+  }
+}

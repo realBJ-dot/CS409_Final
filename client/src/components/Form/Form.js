@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from "react";
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import "./Form.css";
 
 const accessToken = localStorage.getItem("token");
@@ -71,9 +71,10 @@ const Form = () => {
     // .catch(function (error) {
     //   console.log(error);
     // });
+   
     postDataTransaction();
 
-    console.log(usersData._id);
+    //console.log(usersData._id);
   
   }
   return (
@@ -110,7 +111,7 @@ const Form = () => {
           type="number"
           placeholder="Amount... $0" onChange={(e) => setTransactionState({...transactionState, amount: e.target.value})}
         ></input>
-        <button className="button-62">Create transaction</button>
+        <button onClick={() => window.location.reload(false)} className="button-62">Create transaction</button>
       </div>
     </form>
   );
