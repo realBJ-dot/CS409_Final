@@ -37,8 +37,6 @@ const about = () => {
           </div>
         </div>
 </div>
-
-    </div>
   )
 }
 
