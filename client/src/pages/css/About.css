@@ -1,0 +1,45 @@
+.aboutdiv {
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: lightblue;
+}
+.box {
+    margin-top: 100px;
+    background-color: white;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
+  
+  .col1 {
+    background-color: lightgray;
+    height: 100px;
+    align-items: center;
+    justify-items: center;
+  }
+  
+  .col2 {
+    background-color:#242424;;
+    height: 100px;
+    color: white;
+    align-items: center;
+    justify-items: center;
+  }
