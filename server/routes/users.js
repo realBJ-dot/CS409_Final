@@ -48,38 +48,34 @@ router.get("/current_user_info", (req, res) => {
   });
 
 
-  router.delete("/users/:id", async (req, res) => {
+  router.delete("/users", async (req, res) => {
     if (!(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')) {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
     const token = req.headers.authorization.split(' ')[1];
-    const { schemaValidationError } = validate(req.body);
-    if (schemaValidationError) {
-        return res.status(400).send({
-            message: error.details[0].message
-        });
-    }
     try {
         jwt.verify(token, process.env.JWTPRIVATEKEY);
     } catch {
         return res.status(403).send({
-            message: "Authentication failed"
+            message: "Authentication failed",
+            data: []
         });
     }
     const userId = jwt.verify(token, process.env.JWTPRIVATEKEY)._id;
     try {
-        User.findByIdAndDelete(req.params._id, function(err, deletedUser) {
+        User.findByIdAndDelete(userId, function(err, deletedUser) {
             if (err) {
                 res.status(404).send({
-                    message: "cannot user task to delete",
-                    data: {}
+                    message: "User does not exist",
+                    data: userId
                 });
             }
             else {
                 res.status(200).send({
-                    message: "User deleted",
+                    message: "User deleted successfully",
                     data: deletedUser
                 });
             }

@@ -4,22 +4,21 @@ import "./css/Transaction.css";
 import DoughnutChart from "../components/chart/DoughnutChart";
 import Form from "../components/Form/Form"
 import Transactionhistory from "../components/Transactionhistory/Transactionhistory"
-const accessToken = localStorage.getItem("token");
+const accessToken = localStorage.getItem('token');
 const proxy = "http://localhost:3001/api/";
 
 const authAxios = axios.create({
   baseURL: proxy,
   headers: {
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${accessToken}`, 
   },
 });
 
 const Transaction = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(null);
   const [requestError, setrequestError] = useState();
   const [usersData, setUsersData] = useState([]);
 
-  //console.log(accessToken)
 
   //Log Out
   const handleLogOut = () => {
@@ -32,12 +31,15 @@ const Transaction = () => {
       try {
         const transactions = await authAxios.get(`/transactions_for_user`);
         const getUsersData = await authAxios.get(`/current_user_info`);
+       
         setTransactions(transactions.data.data);
         setUsersData(getUsersData.data.data);
       } catch (err) {
+        
         setrequestError(err.response);
       }
     };
+    
     fetchDataTransaction();
   }, []);
 
@@ -60,11 +62,15 @@ const Transaction = () => {
       </div>
       <div className="Bottombox">
         <div className="leftPanelBox">
-          <DoughnutChart transactions={transactions} />
+        {/*transactions ? 
+          <DoughnutChart transactions={transactions} /> : <></>
+          */}
         </div>
         <div className="rightPanelBox">
           <Form />
-          <Transactionhistory />
+          {transactions ? 
+          <Transactionhistory transactions={transactions}/> : <></>
+          }
         </div>
       </div>
     </div>

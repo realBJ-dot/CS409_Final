@@ -1,23 +1,27 @@
 import React from "react";
 import "./Transactionhistory.css";
 
-//dump data
-const items = [
-  {
-    name: "Saving $100",
-    color: "#B0C24D",
-  },
-  {
-    name: "Stock $100",
-    color: "#244D70",
-  },
-  {
-    name: "Iphone 100$",
-    color: "#FFDE59",
-  },
-];
 
-const Transactionhistory = () => {
+const Transactionhistory = ({transactions}) => {
+  const last4Elems = transactions && transactions.length > 4 ? transactions.slice(Math.max(transactions.length - 4, 0)) : transactions;
+  const items = [
+    {
+      name: last4Elems[0]['description'].concat(" $".concat(last4Elems[0]['amount'])),
+      color: "#B0C24D",
+    },
+    {
+      name: last4Elems[1]['description'].concat(" $".concat(last4Elems[1]['amount'])),
+      color: "#244D70",
+    },
+    {
+      name: last4Elems[2]['description'].concat(" $".concat(last4Elems[2]['amount'])),
+      color: "#FFDE59",
+    },
+    {
+      name: last4Elems[3]['description'].concat(" $".concat(last4Elems[3]['amount'])),
+      color: "#0000ff",
+    },
+  ];
   return (
     <div className="transContainer">
       <h1>History</h1>

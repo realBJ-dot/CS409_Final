@@ -24,20 +24,29 @@ router.post("/signup", async (req, res) => {
         email: req.body.email
     })
     if (userName) {
-        return res.status(409).send({message: "This Username alreay exist"});
+        return res.status(409).send({
+            message: "This Username alreay exist",
+            data: req.body
+        });
     } else if (userEmail) {
-        return res.status(409).send({message: "This Email alreay exist"});
+        return res.status(409).send({
+            message: "This Email alreay exist",
+            data: req.body
+        });
     }
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    await new signUpTemplateCopy.User({
+    const newUser = await new signUpTemplateCopy.User({
         ...req.body,
         password: hashPassword,
     }).save();
-    res.status(201).send({ message: "User created successfully" });
+    res.status(201).send({ 
+        message: "User created successfully",
+        data: newUser
+    });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: true, message: "Internal server issue" });
+    res.status(500).json({message: "Internal server issue", data: [], error: true});
   }
 });
 
@@ -58,10 +67,10 @@ router.post("/login", async (req, res) => {
     if (!user) {
         return res.status(401).send({
             message: "Invalid Username or Password, please check again",
+            data: req.body
         });
     }
       
-
     const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
@@ -69,13 +78,17 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
         return res.status(401).send({
             message: "Invalid Username or Password, please check again",
+            data: req.body
         });
     }
      
     const token = user.generateAuthToken();
     res.status(200).send({ token: token, message: "You are in now!!" });
   } catch (err) {
-    res.status(500).send({ message: "Internal server issues" });
+    res.status(500).send({ 
+        message: "Internal server issues", 
+        data: []
+    });
   }
 });
 
