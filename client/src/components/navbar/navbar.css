@@ -166,3 +166,9 @@
       transition: 0.1ms;
     }
   }
+
+  @media screen and (max-width: 375px) {
+    .navbar{
+      min-width: 100vw;
+    }
+  }
