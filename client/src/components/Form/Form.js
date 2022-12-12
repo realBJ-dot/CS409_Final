@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 import axios from 'axios';
 import "./Form.css";
 
@@ -20,29 +20,13 @@ const Form = () => {
     dropDown: "investment",
     amount: 0
   });
-  const [usersData, setUsersData] = useState([]);
-  const [requestError, setrequestError] = useState();
-
-
-
-  useEffect(() => {
-    const fetchDataTransaction = async () => {
-      try {
-        const getUsersData = await authAxios.get(`/current_user_info`);
-        setUsersData(getUsersData.data.data);
-      } catch (err) {
-        setrequestError(err.response);
-      }
-    };
-    fetchDataTransaction();
-  }, []);
 
   const handleFormChange = (e) => {
     e.preventDefault();
     const {transactionDesc, dropDown, amount} = transactionState;
     const tmp = Number(amount);
-    console.log(transactionDesc, dropDown, tmp);
-    console.log(typeof(tmp));
+    //console.log(transactionDesc, dropDown, tmp);
+    //console.log(typeof(tmp));
     
     const postDataTransaction = async () => {
       try {
@@ -52,9 +36,10 @@ const Form = () => {
           dateCreated: Date.now(),
           amount: tmp
         });
+        console.log(postUsersData);
       } catch (err) {
         console.log(err.response.data);
-        setrequestError(err.response);
+        //setrequestError(err.response);
       }
     };
 
@@ -71,7 +56,6 @@ const Form = () => {
     // .catch(function (error) {
     //   console.log(error);
     // });
-   
     postDataTransaction();
 
     //console.log(usersData._id);

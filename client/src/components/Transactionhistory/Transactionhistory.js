@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Transactionhistory.css";
 
 
@@ -38,7 +38,7 @@ function Transaction({ category }) {
     <div className="itemList">
       <span className="item1">{category.name ?? ""}</span>
       <span className="itemBox" style={{background: `${category.color ?? "#fff"}`}}></span>
-      <span className="trashIcon"><i class="fas fa-trash"></i></span>
+      <span className="trashIcon"><i className="fas fa-trash"></i></span>
     </div>
   );
 }

@@ -4,11 +4,12 @@
   flex-direction: column;
 }
 .Topbox{
-  height: 10vh;
+  height: 40vh;
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 .Topbox .userName{
   color: #FB8500;
@@ -37,9 +38,9 @@
   min-width: 100%;
 }
 .button-17 {
-  margin: 10px;
-  width: 200px;
-  height: 100px;
+  margin: 20px;
+  width: 100px;
+  height: 50px;
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -121,7 +122,4 @@
 }
 
 @media screen and (max-width: 820px) {
-  .Topbox{
-    height: 30vh;
-  }
 }

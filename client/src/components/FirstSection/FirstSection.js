@@ -4,7 +4,7 @@ import "./FirstSection.css"
 const FirstSection = () => {
   return (
     <div className='first-container'>
-      <video src='/videos/banner.mp4' autoPlay loop muted />
+      <video className ="homeVideo" src='/videos/banner.mp4' autoPlay loop muted />
       <h1>Expense Tracker</h1>
       <p>What are you waiting for?</p>
       <p>Sign Up now to start saving your [$] money</p>
